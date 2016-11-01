@@ -43,11 +43,15 @@ library(tidyverse)
 
 Arguments:
 
--path: The file path to the raw hydat .csv file
--discharge_obj: Name of output discharge dataframe (if any) into the global environment
--levels_obj: Name of output stage dataframe (if any) into the global environment
--monthly_meansQ: Name of the output mean monthly discharge dataframe (if any) into the global environment
--monthly_meansLvl: Name of the output mean monthly stage dataframe (if any) into the global environment
+- path: The file path to the raw hydat .csv file
+
+- discharge_obj: Name of output discharge dataframe (if any) into the global environment
+
+- levels_obj: Name of output stage dataframe (if any) into the global environment
+
+- monthly_meansQ: Name of the output mean monthly discharge dataframe (if any) into the global environment
+
+- monthly_meansLvl: Name of the output mean monthly stage dataframe (if any) into the global environment
 
 **To come:**
 

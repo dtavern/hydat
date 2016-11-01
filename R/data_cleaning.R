@@ -1,8 +1,3 @@
-library(tidyverse)
-
-data_symb <- read_csv("csvs/DATA_SYMBOLS.csv")
-stations <- read_csv("csvs/STATIONS.csv")
-
 
 #' Clean hydat data
 #'
@@ -13,6 +8,8 @@ stations <- read_csv("csvs/STATIONS.csv")
 #' @export
 hydat_load <- function(path, discharge_obj = "discharge", levels_obj = "levels", monthly_meansQ = "mo_meanQ", monthly_meansLvl = "mo_meanLvl"){
   library(tidyverse)
+  data_symb <- read_csv("csvs/DATA_SYMBOLS.csv")
+  stations <- read_csv("csvs/STATIONS.csv")
   raw <- read_csv(path, skip = 1)
   ## Changes measurement codes to char
   raw$PARAM[raw$PARAM == 1] <- "Discharge"

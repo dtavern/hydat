@@ -1,9 +1,18 @@
 library(tidyverse)
-setwd("~/Documents/other_r_proj/hydat/csvs")
-data_symb <- read_csv("DATA_SYMBOLS.csv")
-stations <- read_csv("STATIONS.csv")
 
+data_symb <- read_csv("csvs/DATA_SYMBOLS.csv")
+stations <- read_csv("csvs/STATIONS.csv")
+
+
+#' Clean hydat data
+#'
+#' Takes in a .csv file from the hydat database and converts it into 'long' format and splits into two user-defined objects for discharge and stage
+#' @param path the input path of the .csv file
+#' @param  discharge_obj names of the object outputted for discharge
+#' @return returns two user-defined objects for discharge and stage dataframes
+#' @export
 hydat_load <- function(path, discharge_obj = "discharge", levels_obj = "levels", monthly_meansQ = "mo_meanQ", monthly_meansLvl = "mo_meanLvl"){
+  library(tidyverse)
   raw <- read_csv(path, skip = 1)
   ## Changes measurement codes to char
   raw$PARAM[raw$PARAM == 1] <- "Discharge"

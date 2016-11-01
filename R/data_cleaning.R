@@ -78,11 +78,5 @@ hydat_load <- function(path, discharge_obj = "discharge", levels_obj = "levels",
     }
 }
 
-hydat_load("test.csv")
 
-
-ggplot(data = mo_mean) +
-  geom_line(aes(x=month, y = mean_moQ)) +
-  geom_line(aes(x=month, y = (mean_moQ+sd_moQ))) +
-  geom_line(aes(x=month, y = (mean_moQ-sd_moQ)))
 

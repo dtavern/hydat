@@ -6,8 +6,7 @@
 #' @param  discharge_obj names of the object outputted for discharge
 #' @return returns two user-defined objects for discharge and stage dataframes
 #' @export
-hydat_load <- function(path, discharge_obj = "discharge", levels_obj = "levels", monthly_meansQ = "mo_meanQ", monthly_meansLvl = "mo_meanLvl"){
-  library(tidyverse)
+hydat_load <- function(path, return = "discharge"){
   data_symb <- read_csv("csvs/DATA_SYMBOLS.csv")
   stations <- read_csv("csvs/STATIONS.csv")
   raw <- read_csv(path, skip = 1)
@@ -28,7 +27,7 @@ hydat_load <- function(path, discharge_obj = "discharge", levels_obj = "levels",
   ## For each of the days, unite discharge and discharge code together
   for (i in 1:length(colnames_dlyflow)) {
     raw <- raw %>%
-    unite_(col = colnames_dlyflow[i], from=c(colnames_dlyflow[i], colnames_dlycode[i]), remove = TRUE)
+      unite_(col = colnames_dlyflow[i], from=c(colnames_dlyflow[i], colnames_dlycode[i]), remove = TRUE)
   }
 
   #Rename columns
@@ -55,33 +54,17 @@ hydat_load <- function(path, discharge_obj = "discharge", levels_obj = "levels",
   discharge <- raw_tidy %>%
     filter(param == "Discharge")
 
-  if(nrow(level) > 0){
-    assign(levels_obj,level,.GlobalEnv)
-
-    mo_meanLvl <- level %>%
-      group_by(month) %>%
-      summarize(mean_moLvl = mean(measurement, na.rm = TRUE),
-                sd_moLvl = sd(measurement, na.rm = TRUE)) %>%
-      ungroup()
-
-    assign(monthly_meansLvl, mo_meanLvl, .GlobalEnv)
-  } else {
-    print("No entries of 'level' apparent in original dataset")
+  ## Takes the argument `return` to return either discharge values or stage values.
+  if(return == "discharge"){
+    return(discharge)
+  }
+  if(return == "level"){
+    return(level)
+  }
+  else{
+    print("Not a valid return argument. You may only return discharge or level data")
   }
 
-  if(nrow(discharge)>0){
-    assign(discharge_obj,discharge,.GlobalEnv)
-
-    mo_meanQ <- discharge %>%
-    group_by(month) %>%
-    summarize(mean_moQ = mean(measurement, na.rm = TRUE),
-            sd_moQ = sd(measurement, na.rm = TRUE)) %>%
-    ungroup()
-
-    assign(monthly_meansQ, mo_meanQ, .GlobalEnv)
-  } else {
-      print("No entries of 'discharge' apparent in original dataset")
-    }
 }
 
 

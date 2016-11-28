@@ -1,7 +1,6 @@
 Package: hydat
 Type: Package
-Title: To quickly arrange and analyze data downloaded from the Government of
-    Canada Hydat database.
+Title: Quickly and Efficiently Analyze Datasets from HYDAT
 Version: 0.1.0
 Authors@R: person("David", "Tavernini", email = "taverninid@gmail.com", role = c("aut", "cre"))
 url: https://github.com/dtavern/hydat

@@ -4,16 +4,15 @@
 \alias{hydat_load}
 \title{Clean hydat data}
 \usage{
-hydat_load(path, discharge_obj = "discharge", levels_obj = "levels",
-  monthly_meansQ = "mo_meanQ", monthly_meansLvl = "mo_meanLvl")
+hydat_load(path, return = "discharge")
 }
 \arguments{
 \item{path}{the input path of the .csv file}
 
-\item{discharge_obj}{names of the object outputted for discharge}
+\item{return}{select output for either "discharge" or stream "level"}
 }
 \value{
-returns two user-defined objects for discharge and stage dataframes
+returns discharge or stage dataframe in long format
 }
 \description{
 Takes in a .csv file from the hydat database and converts it into 'long' format and splits into two user-defined objects for discharge and stage

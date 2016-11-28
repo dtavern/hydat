@@ -3,12 +3,12 @@
 #'
 #' Takes in a .csv file from the hydat database and converts it into 'long' format and splits into two user-defined objects for discharge and stage
 #' @param path the input path of the .csv file
-#' @param  discharge_obj names of the object outputted for discharge
-#' @return returns two user-defined objects for discharge and stage dataframes
+#' @param return select output for either "discharge" or stream "level"
+#' @return returns discharge or stage dataframe in long format
 #' @export
 hydat_load <- function(path, return = "discharge"){
-  data_symb <- read_csv("csvs/DATA_SYMBOLS.csv")
-  stations <- read_csv("csvs/STATIONS.csv")
+  data_symb <- datasymb
+  stations <- stations
   raw <- read_csv(path, skip = 1)
   ## Changes measurement codes to char
   raw$PARAM[raw$PARAM == 1] <- "Discharge"

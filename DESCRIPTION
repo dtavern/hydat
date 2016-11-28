@@ -9,6 +9,8 @@ Description: A few functions in this package allow for a quick manipulation of
     hydat data into "long" format. Additional functions allow for quick calculation
     of mean monthly discharge, generation of hydrographs and rating curves, and to
     also calculate rating curve equations.
+Depends:
+    R (>= 3.3.1)
 License: MIT + file LICENSE
 LazyData: TRUE
 Imports:

@@ -8,12 +8,12 @@
 #'
 #' @return returns discharge or stage dataframe in long format
 #' @import magrittr
+#' @import dplyr
 #' @export
 
 hydat_load <- function(path, return = "discharge"){
-  data_symb <- datasymb
-  stations <- stations
-  raw <- readr::read_csv(path, skip = 1)
+
+  raw <- utils::read.csv(path, skip = 1)
   ## Changes measurement codes to char
   raw$PARAM[raw$PARAM == 1] <- "Discharge"
   raw$PARAM[raw$PARAM == 2] <- "Level"
@@ -31,7 +31,7 @@ hydat_load <- function(path, return = "discharge"){
   ## For each of the days, unite discharge and discharge code together
   for (i in 1:length(colnames_dlyflow)) {
     raw <- raw %>%
-      dplyr::unite_(col = colnames_dlyflow[i], from=c(colnames_dlyflow[i], colnames_dlycode[i]), remove = TRUE)
+      tidyr::unite_(col = colnames_dlyflow[i], from=c(colnames_dlyflow[i], colnames_dlycode[i]), remove = TRUE)
   }
 
   #Rename columns
@@ -45,8 +45,8 @@ hydat_load <- function(path, return = "discharge"){
     tidyr::separate(measurement, c("measurement", "code"), sep = "_", remove = TRUE) %>%
     dplyr::arrange(PARAM, YEAR, month, DD) %>%
     dplyr::left_join(y = stations, by=c("ID" = "STATION_NUMBER")) %>%
-    dplyr::left_join(y = data_symb[1:2], by = c("code" = "SYMBOL_ID")) %>%
-    dplyr::select("STATION_NAME", "PROV_TERR_STATE_LOC", "PARAM", "YEAR", "month", "DD", "measurement", "SYMBOL_EN", "TYPE", "LATITUDE", "LONGITUDE","DRAINAGE_AREA_GROSS","DRAINAGE_AREA_EFFECT")
+    dplyr::left_join(y = datasymb[1:2], by = c("code" = "SYMBOL_ID")) %>%
+    dplyr::select(STATION_NAME, PROV_TERR_STATE_LOC, PARAM, YEAR, month, DD, measurement,SYMBOL_EN, TYPE, LATITUDE, LONGITUDE,DRAINAGE_AREA_GROSS,DRAINAGE_AREA_EFFECT)
   colnames(raw_tidy) <- tolower(colnames(raw_tidy))
   raw_tidy$measurement <- as.numeric(raw_tidy$measurement)
   raw_tidy$month <- as.integer(raw_tidy$month)

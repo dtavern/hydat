@@ -2,14 +2,18 @@
 #' Clean hydat data
 #'
 #' Takes in a .csv file from the hydat database and converts it into 'long' format and splits into two user-defined objects for discharge and stage
+#'
 #' @param path the input path of the .csv file
 #' @param return select output for either "discharge" or stream "level"
+#'
 #' @return returns discharge or stage dataframe in long format
+#' @import magrittr
 #' @export
+
 hydat_load <- function(path, return = "discharge"){
   data_symb <- datasymb
   stations <- stations
-  raw <- read_csv(path, skip = 1)
+  raw <- readr::read_csv(path, skip = 1)
   ## Changes measurement codes to char
   raw$PARAM[raw$PARAM == 1] <- "Discharge"
   raw$PARAM[raw$PARAM == 2] <- "Level"
@@ -27,7 +31,7 @@ hydat_load <- function(path, return = "discharge"){
   ## For each of the days, unite discharge and discharge code together
   for (i in 1:length(colnames_dlyflow)) {
     raw <- raw %>%
-      unite_(col = colnames_dlyflow[i], from=c(colnames_dlyflow[i], colnames_dlycode[i]), remove = TRUE)
+      dplyr::unite_(col = colnames_dlyflow[i], from=c(colnames_dlyflow[i], colnames_dlycode[i]), remove = TRUE)
   }
 
   #Rename columns
@@ -37,12 +41,12 @@ hydat_load <- function(path, return = "discharge"){
 
   ## Gather data into long format
   raw_tidy <- raw %>%
-    gather(key = "month", value = "measurement", 6:17) %>%
-    separate(measurement, c("measurement", "code"), sep = "_", remove = TRUE) %>%
-    arrange(PARAM, YEAR, month, DD) %>%
-    left_join(y = stations, by=c("ID" = "STATION_NUMBER")) %>%
-    left_join(y = data_symb[1:2], by = c("code" = "SYMBOL_ID")) %>%
-    select(STATION_NAME, PROV_TERR_STATE_LOC, PARAM, YEAR, month, DD, measurement, SYMBOL_EN, TYPE, LATITUDE, LONGITUDE,DRAINAGE_AREA_GROSS,DRAINAGE_AREA_EFFECT)
+    tidyr::gather(key = "month", value = "measurement", 6:17) %>%
+    tidyr::separate(measurement, c("measurement", "code"), sep = "_", remove = TRUE) %>%
+    dplyr::arrange(PARAM, YEAR, month, DD) %>%
+    dplyr::left_join(y = stations, by=c("ID" = "STATION_NUMBER")) %>%
+    dplyr::left_join(y = data_symb[1:2], by = c("code" = "SYMBOL_ID")) %>%
+    dplyr::select("STATION_NAME", "PROV_TERR_STATE_LOC", "PARAM", "YEAR", "month", "DD", "measurement", "SYMBOL_EN", "TYPE", "LATITUDE", "LONGITUDE","DRAINAGE_AREA_GROSS","DRAINAGE_AREA_EFFECT")
   colnames(raw_tidy) <- tolower(colnames(raw_tidy))
   raw_tidy$measurement <- as.numeric(raw_tidy$measurement)
   raw_tidy$month <- as.integer(raw_tidy$month)
@@ -50,9 +54,9 @@ hydat_load <- function(path, return = "discharge"){
 
   ## Separate data to discharge and level
   level <- raw_tidy %>%
-    filter(param == "Level")
+    dplyr::filter(param == "Level")
   discharge <- raw_tidy %>%
-    filter(param == "Discharge")
+    dplyr::filter(param == "Discharge")
 
   ## Takes the argument `return` to return either discharge values or stage values.
   if(return == "discharge"){

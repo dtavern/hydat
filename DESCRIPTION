@@ -12,5 +12,7 @@ Description: A few functions in this package allow for a quick manipulation of
 License: MIT + file LICENSE
 LazyData: TRUE
 Imports:
-    tidyverse
+    magrittr,
+    dplyr,
+    tidyr
 RoxygenNote: 5.0.1

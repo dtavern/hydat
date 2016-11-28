@@ -12,8 +12,11 @@
 #' @export
 
 hydat_load <- function(path, return = "discharge"){
-
-  raw <- utils::read.csv(path, skip = 1)
+  if(is.character(path)){
+  raw <- utils::read.csv(path, skip = 1)} else{raw = path}
+  if(ncol(raw) != 29){
+    print("The number of variables is not equal to the expected value of 29. Please ensure your input file is unmodified from the HYDAT database.")
+  } else{
   ## Changes measurement codes to char
   raw$PARAM[raw$PARAM == 1] <- "Discharge"
   raw$PARAM[raw$PARAM == 2] <- "Level"
@@ -68,7 +71,7 @@ hydat_load <- function(path, return = "discharge"){
   else{
     print("Not a valid return argument. You may only return discharge or level data")
   }
-
+}
 }
 
 

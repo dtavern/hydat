@@ -11,7 +11,7 @@
 \item{SYMBOL_FR}{French description of data attribute}
 }}
 \source{
-Government of Canada /url{wateroffice.ec.gc.ca}
+Government of Canada \url{wateroffice.ec.gc.ca}
 }
 \usage{
 datasymb

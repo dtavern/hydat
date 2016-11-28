@@ -23,7 +23,7 @@
 \item{DATUM_ID}{Datum ID number}
 }}
 \source{
-Government of Canada /url{wateroffice.ec.gc.ca}
+Government of Canada \url{wateroffice.ec.gc.ca}
 }
 \usage{
 stations

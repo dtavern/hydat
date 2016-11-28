@@ -13,6 +13,6 @@ hydat_flooddist(x)
 returns a dataframe of annual peak discharges and the proportion of discharges less than
 }
 \description{
-Generates annual flood distribution by arranging annual peak flows in ascending order and calculates proportion less than
+Generates annual flood distribution by arranging annual peak flows in ascending order and calculates proportion less than. Note: daily discharge values that are NA are omitted from this analysis. Check your data before processing.
 }
 

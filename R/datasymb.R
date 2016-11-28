@@ -8,7 +8,7 @@
 #' \item{SYMBOL_EN}{English description of data attribute}
 #' \item{SYMBOL_FR}{French description of data attribute}
 #' }
-#' @source Government of Canada /url{wateroffice.ec.gc.ca}
+#' @source Government of Canada \url{wateroffice.ec.gc.ca}
 
 
 "datasymb"

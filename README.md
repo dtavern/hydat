@@ -8,7 +8,7 @@
 
 ###STATUS
 
-This package is currently unreleased and the first version (v0.1.0) is still being developed. At this point, it is just a seed of an idea and I am currently teaching myself how to create and assemble packages. Stay tuned for an official release. If you are looking for any specific functions or scripts, I am open to providing them to you.
+This package is currently unreleased and the first version (v0.1.0) is still being developed. At this point, it is just a seed of an idea and I am currently developing this package for an assignment in STAT545. Stay tuned for an official release. If you are looking for any specific functions or scripts, I am open to providing them to you.
 
 ### Disclaimer
 
@@ -41,22 +41,4 @@ library(tidyverse)
 
 `hydat_load`: Takes in raw .csv file from hydat database, matches measurement codes and station codes to their actual meaning, and converts the table from wide format to long format for easy analysis.
 
-Arguments:
-
-- path: The file path to the raw hydat .csv file
-
-- discharge_obj: Name of output discharge dataframe (if any) into the global environment
-
-- levels_obj: Name of output stage dataframe (if any) into the global environment
-
-- monthly_meansQ: Name of the output mean monthly discharge dataframe (if any) into the global environment
-
-- monthly_meansLvl: Name of the output mean monthly stage dataframe (if any) into the global environment
-
-**To come:**
-
-`hydat_hydrograph`: Takes in discharge data and calculates mean monthly data and user-specified quantiles to be plotted onto a hydrograph
-
-`hydat_ratingchart`: Takes in discharge and stage data to generate a rating curve plot
-
-`hydat_ratingcurve`: Takes in discharge and stage data to generate a rating curve equation to estimate discharge from stage depth.
+`hydat_flooddist`: Takes in processed dataframe through `hydat_load` and generates a percentile value for annual peak flows..

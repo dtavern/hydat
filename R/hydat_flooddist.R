@@ -20,7 +20,8 @@ hydat_flooddist <- function(x){
     ungroup() %>%
     arrange(max_q)
   arr_yrmax <- arr_yrmax %>%
-    mutate(percentile = ((row_number())/nrow(arr_yrmax))*100)
-
+    mutate(percentile = ((row_number())/nrow(arr_yrmax))*100,
+           perc_exceeding = 100-percentile,
+           recurrence_int = 1/(perc_exceeding/100))
   return(arr_yrmax)
 }

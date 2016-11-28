@@ -20,7 +20,7 @@
 #' \item{OPERATOR_ID}{Operator ID number}
 #' \item{DATUM_ID}{Datum ID number}
 #' }
-#' @source Government of Canada /url{wateroffice.ec.gc.ca}
+#' @source Government of Canada \url{wateroffice.ec.gc.ca}
 
 
 "stations"

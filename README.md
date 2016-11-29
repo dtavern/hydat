@@ -18,6 +18,10 @@ Note that this package is my first package being written and I am rather new wit
 
 The goal of the hydat package is to smoothly and efficiently tidy hydrometric data downloaded from the Government of Canada [Hydat database](https://wateroffice.ec.gc.ca/search/search_e.html?sType=h2oArc). The primary function contained in this package (`hydat_load`) was created to convert the downloaded daily discharge data .csv files to dataframes in "long" format. In later versions, other tools will be developed to quickly generate hydrographs, rating curves, to name a few.
 
+### Installation
+
+You can install this package directly from my github account using `devtools::install_github("dtavern/hydat")`
+
 ### Collaboration and Comments
 
 Initiating this project came from wrestling .csv data in excel prior to analysis. I thought I would speed up some of the processes for anyone else interested in rivers. If you have any suggestions such as other tasks you think could be automated, or if you would like to add in your own tools within this package, feel free to contact me at taverninid@gmail.com. Also feel free to branch off and develop this package further in your own interests!

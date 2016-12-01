@@ -2,5 +2,6 @@
 
 export(hydat_flooddist)
 export(hydat_load)
+export(hydat_model_floodfreq)
 import(dplyr)
 import(magrittr)

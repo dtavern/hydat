@@ -4,12 +4,21 @@
 \alias{hydat_load}
 \title{Clean hydat data}
 \usage{
-hydat_load(path, return = "discharge")
+hydat_load(path, return = "discharge", omit = NULL, min_year = NULL,
+  max_year = NULL, na.rm = FALSE)
 }
 \arguments{
 \item{path}{the input path of the .csv file}
 
 \item{return}{select output for either "discharge" or stream "level"}
+
+\item{omit}{input vector of measurement codes you wish to omit. See object `datasymb` for measurement codes. Default includes all measurements}
+
+\item{min_year}{input integer of lower bound for range of years. Default has no minimum year}
+
+\item{max_year}{input integer of upper bound for range of years. Default has no maximum year}
+
+\item{na.rm}{logical input. Will remove all days with no discharge measurements. Default setting will not remove any observations}
 }
 \value{
 returns discharge or stage dataframe in long format

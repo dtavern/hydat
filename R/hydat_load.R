@@ -21,7 +21,10 @@ hydat_load <- function(path, return = "discharge", omit = NULL, min_year = NULL,
 
   if(ncol(raw)!= 29){
     stop(print("The number of variables is not equal to the expected value of 29. Please ensure your input file is unmodified from the HYDAT database."))}
-  if(!is.character(omit) & !is.null(omit)){stop(print("Expected omitted paramaters to be character vector or NULL. Please check argument to ensure that input is either character vector or NULL"))}
+  if(!is.character(omit) & !is.null(omit)){stop(print("Expected omitted paramaters to be character vector or NULL. Please consult ?hydat_load for more information."))}
+  if(!is.numeric(min_year) & !is.null(min_year)){stop(print("min_year must be an integer value or NULL. Please consult ?hydat_load for more information."))}
+  if(!is.numeric(max_year) & !is.null(max_year)){stop(print("max_year must be an integer value or NULL. Please consult ?hydat_load for more information."))}
+  if(!is.logical(na.rm)){stop(print("na.rm mus be a logical statement. Please consult ?hydat_load for more information."))}
 
   ## Changes measurement codes to char
   raw$PARAM[raw$PARAM == 1] <- "Discharge"

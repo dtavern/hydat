@@ -9,51 +9,57 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+## hydat v0.1.0
+### About 
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+The goal of the hydat package is to smoothly and efficiently tidy hydrometric data downloaded from the Government of Canada [Hydat database](https://wateroffice.ec.gc.ca/search/search_e.html?sType=h2oArc). The primary function contained in this package (`hydat_load`) was created to convert the downloaded daily discharge data .csv files to dataframes in "long" format. As time goes by, I'll add other features and functions for quick analysis of data
 
-## Vignette Info
+### Installation
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+You may install this package through the GitHub repo using `install_github`
 
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+```
+install.packages("devtools")
+devtools::install_github("dtavern/hydat")
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+### Function capabilities
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+The functions that are available in this package are listed below. Please access the help files through ?function for further detail.
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+- `hydat_load`: Input .csv file from the hydat database (non-date-data format) and apply various filters to output a new dataframe in long format. 
 
-## More Examples
+- `hydat_flooddist`: Input long-format (post-processed by hydat_load) dataframe and output flood frequency table.
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+### Other objects
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+- `burpee`: example dataset taken from Burpee Millstream
+- `datasymb`: lookup table for measurement codes from the Government of Canada
+- `stations`: complete stations list in the HYDAT database
+
+### Examples
+
+Import raw file (using Burpee Millstream as example dataset) using `hydat_load()` omitting estimated values
+
+```{r}
+library(hydat)
+library(ggplot2)
+x <- hydat_load(burpee, omit = "E", na.rm = TRUE)
 ```
 
-Also a quote using `>`:
+Generate flood frequency distribution usng `hydat_flooddist`
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+```{r}
+xdist <- hydat_flooddist(x)
+```
+
+Plot as cumulative distribution
+
+```{r}
+ggplot(data = xdist, aes(y = recurrence_int, x = max_q)) +
+  geom_line() +
+  scale_x_log10()+
+  scale_y_log10()
+```
+
 

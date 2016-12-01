@@ -5,18 +5,24 @@
 #'
 #' @param path the input path of the .csv file
 #' @param return select output for either "discharge" or stream "level"
+#' @param omit input vector of measurement codes you wish to omit. See object `datasymb` for measurement codes. Default includes all measurements
+#' @param min_year input integer of lower bound for range of years. Default has no minimum year
+#' @param max_year input integer of upper bound for range of years. Default has no maximum year
+#' @param na.rm logical input. Will remove all days with no discharge measurements. Default setting will not remove any observations
 #'
 #' @return returns discharge or stage dataframe in long format
 #' @import magrittr
 #' @import dplyr
 #' @export
 
-hydat_load <- function(path, return = "discharge"){
+hydat_load <- function(path, return = "discharge", omit = NULL, min_year = NULL, max_year = NULL, na.rm = FALSE){
   if(is.character(path)){
   raw <- utils::read.csv(path, skip = 1)} else{raw = path}
-  if(ncol(raw) != 29){
-    print("The number of variables is not equal to the expected value of 29. Please ensure your input file is unmodified from the HYDAT database.")
-  } else{
+
+  if(ncol(raw)!= 29){
+    stop(print("The number of variables is not equal to the expected value of 29. Please ensure your input file is unmodified from the HYDAT database."))}
+  if(!is.character(omit) & !is.null(omit)){stop(print("Expected omitted paramaters to be character vector or NULL. Please check argument to ensure that input is either character vector or NULL"))}
+
   ## Changes measurement codes to char
   raw$PARAM[raw$PARAM == 1] <- "Discharge"
   raw$PARAM[raw$PARAM == 2] <- "Level"
@@ -42,11 +48,15 @@ hydat_load <- function(path, return = "discharge"){
   newnames[6:17] <- as.character(seq(1,12,by=1))
   colnames(raw) <- newnames
 
+  ## Filter according to omits
+  measurement_filter <- c(datasymb$SYMBOL_ID, "")
+  if(is.character(omit)){measurement_filter <- setdiff(measurement_filter, omit)}
   ## Gather data into long format
   raw_tidy <- raw %>%
     tidyr::gather(key = "month", value = "measurement", 6:17) %>%
     tidyr::separate(measurement, c("measurement", "code"), sep = "_", remove = TRUE) %>%
     dplyr::arrange(PARAM, YEAR, month, DD) %>%
+    dplyr::filter(code %in% measurement_filter) %>%
     dplyr::left_join(y = stations, by=c("ID" = "STATION_NUMBER")) %>%
     dplyr::left_join(y = datasymb[1:2], by = c("code" = "SYMBOL_ID")) %>%
     dplyr::select(STATION_NAME, PROV_TERR_STATE_LOC, PARAM, YEAR, month, DD, measurement,SYMBOL_EN, TYPE, LATITUDE, LONGITUDE,DRAINAGE_AREA_GROSS,DRAINAGE_AREA_EFFECT)
@@ -54,6 +64,14 @@ hydat_load <- function(path, return = "discharge"){
   raw_tidy$measurement <- as.numeric(raw_tidy$measurement)
   raw_tidy$month <- as.integer(raw_tidy$month)
   raw_tidy
+  minyr <- if(is.null(min_year)){min(raw_tidy$year)} else{min_year}
+  maxyr <- if(is.null(max_year)){max(raw_tidy$year)} else{max_year}
+  raw_tidy <- raw_tidy %>%
+    dplyr::filter(year >= minyr & year <= maxyr)
+
+  if(na.rm == TRUE){
+    raw_tidy <- raw_tidy[!is.na(raw_tidy$measurement),]
+  }
 
   ## Separate data to discharge and level
   level <- raw_tidy %>%
@@ -72,7 +90,7 @@ hydat_load <- function(path, return = "discharge"){
     print("Not a valid return argument. You may only return discharge or level data")
   }
 }
-}
+
 
 
 

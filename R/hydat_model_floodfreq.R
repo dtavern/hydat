@@ -3,9 +3,12 @@
 #' model flood recurrence intervals
 #'
 #' @param x input dataset post-processed through `hydat_load`
+#' @param logx logical input on whether to transform x variable with log10()
+#' @param logy logical input on whether to transform y variable with log10()
 #'
 #' @return returns linear model diagnostics and model result in a list format
 #' @export
+
 hydat_model_floodfreq <- function(x, logx = FALSE, logy = FALSE){
   flooddist <- hydat_flooddist(x)
   flooddist <- flooddist[1:(nrow(flooddist)-1),]
@@ -40,6 +43,7 @@ hydat_model_floodfreq <- function(x, logx = FALSE, logy = FALSE){
   par(mfrow=c(1,1),cex=1.0,mai=c(1.0,1.0,1.0,1.0))
   diag_plots <-recordPlot()
   plot.new()
+
   shapiro <- shapiro.test(flooddist$resid)
   output <- list(diagnostic_plots = diag_plots, shapiro_normality = shapiro, model = flm, model_summary = sumflm)
   return(output)

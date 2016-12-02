@@ -4,10 +4,14 @@
 \alias{hydat_model_floodfreq}
 \title{model flood recurrence intervals}
 \usage{
-hydat_model_floodfreq(x)
+hydat_model_floodfreq(x, logx = FALSE, logy = FALSE)
 }
 \arguments{
 \item{x}{input dataset post-processed through `hydat_load`}
+
+\item{logx}{logical input on whether to transform x variable with log10()}
+
+\item{logy}{logical input on whether to transform y variable with log10()}
 }
 \value{
 returns linear model diagnostics and model result in a list format

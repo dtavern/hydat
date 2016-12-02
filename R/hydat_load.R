@@ -57,14 +57,17 @@ hydat_load <- function(path, return = "discharge", omit = NULL, min_year = NULL,
   ## Gather data into long format
   raw_tidy <- raw %>%
     tidyr::gather(key = "month", value = "measurement", 6:17) %>%
-    tidyr::separate(measurement, c("measurement", "code"), sep = "_", remove = TRUE) %>%
+    tidyr::separate(measurement, c("measurement", "code"), sep = "_", remove = TRUE)
+  raw_tidy$code <- as.character(raw_tidy$code) # Convert to character to match join
+  raw_tidy$ID <- as.character(raw_tidy$ID) #Convert to character to match join
+  raw_tidy <- raw_tidy %>%
     dplyr::arrange(PARAM, YEAR, month, DD) %>%
     dplyr::filter(code %in% measurement_filter) %>%
     dplyr::left_join(y = stations, by=c("ID" = "STATION_NUMBER")) %>%
     dplyr::left_join(y = datasymb[1:2], by = c("code" = "SYMBOL_ID")) %>%
     dplyr::select(STATION_NAME, PROV_TERR_STATE_LOC, PARAM, YEAR, month, DD, measurement,SYMBOL_EN, TYPE, LATITUDE, LONGITUDE,DRAINAGE_AREA_GROSS,DRAINAGE_AREA_EFFECT)
   colnames(raw_tidy) <- tolower(colnames(raw_tidy))
-  raw_tidy$measurement <- as.numeric(raw_tidy$measurement)
+  raw_tidy$measurement <- suppressWarnings(as.numeric(raw_tidy$measurement)) # Suppressed warnings because all values were converted to character first then to discharge leaving empty character cells to be converted to NA
   raw_tidy$month <- as.integer(raw_tidy$month)
   raw_tidy
   minyr <- if(is.null(min_year)){min(raw_tidy$year)} else{min_year}

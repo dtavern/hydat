@@ -14,6 +14,7 @@ Depends:
 License: MIT + file LICENSE
 LazyData: TRUE
 Imports:
+    ggplot2,
     magrittr,
     dplyr,
     tidyr

@@ -31,6 +31,8 @@ The functions that are available in this package are listed below. Please access
 
 - `hydat_flooddist`: Input long-format (post-processed by hydat_load) dataframe and output flood frequency table.
 
+- `hydat_model_floodfreq`: Input long-format (post-processed by hydat_load) dataframe and output a fitted linear model with diagnostic plots, normality test, and model in list format.
+
 ### Other objects
 
 - `burpee`: example dataset taken from Burpee Millstream
@@ -60,5 +62,13 @@ ggplot(data = xdist, aes(y = recurrence_int, x = max_q)) +
   geom_line() +
   scale_x_log10()+
   scale_y_log10()
+```
+
+Fit a flood recurrence interval model using `hydat_model_floodfreq`
+
+```{r}
+ff <- hydat_model_floodfreq(x)
+
+ff
 ```
 

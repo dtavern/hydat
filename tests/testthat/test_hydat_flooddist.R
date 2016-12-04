@@ -9,4 +9,5 @@ test_that("hydat_flooddist successfully generates distribution of flood frequenc
   expect_true(is.integer(y$year))
   expect_true(is.numeric(y$max_q))
   expect_equal(min(y["perc_exceeding"]), expected = 0)
+  expect_error(hydat_flooddist(burpee)) # Attempt to apply function on unprocessed data
 })

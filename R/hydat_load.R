@@ -85,6 +85,11 @@ hydat_load <- function(path, return = "discharge", omit = NULL, min_year = NULL,
   discharge <- raw_tidy %>%
     dplyr::filter(param == "Discharge")
 
+  ##Throw an error if joins did not yield results
+  if(is.na(raw_tidy$station_name[1]) | is.na(raw_tidy$prov_terr_state_loc[1])){
+    warning(print("Joining of station and data symbol yielded NA values. Please ensure that original dataset was unmodified."))
+  }
+
   ## Takes the argument `return` to return either discharge values or stage values.
   if(return == "discharge"){
     return(discharge)

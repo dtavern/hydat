@@ -9,5 +9,6 @@ test_that("model fits correctly and outputs into list format",{
   expect_true(is.list(x[2]))
   expect_true(is.list(x[3]))
   expect_true(is.list(x[4]))
+  expect_error(hydat_model_floodfreq(burpee)) ## Tests to see if function applies successfully on unprocessed data (it shouldn't)
 
 })

@@ -45,4 +45,6 @@ library(tidyverse)
 
 `hydat_load`: Takes in raw .csv file from hydat database, matches measurement codes and station codes to their actual meaning, and converts the table from wide format to long format for easy analysis.
 
-`hydat_flooddist`: Takes in processed dataframe through `hydat_load` and generates a percentile value for annual peak flows..
+`hydat_flooddist`: Takes in processed dataframe through `hydat_load` and generates a percentile value for annual peak flows.
+
+`hydat_model_floodfreq`: Takes in processed dataframe through `hydat_load` and generates a list output containing diagnostic plots for linear model, a normality test, model coefficients, and summary.

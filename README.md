@@ -12,7 +12,7 @@ This package is currently unreleased and the first version (v0.1.0) is still bei
 
 ### Disclaimer
 
-Note that this package is my first package being written and I am rather new with R/GitHub/R Packages. This package is open for use by anyone, but I am not liable for any problems this package may cause directly or indirectly. Please let me know if there are any issues that you find with this package as I would love to fix any problems.
+This package is open for use by anyone, but be warned of any issues this package may cause directly or indirectly. Use of this package is your responsibility as functions are still fairly preliminary. Please let me know if there are any issues that you find with this package as I would love to fix any problems.
 
 ### About
 
@@ -20,7 +20,11 @@ The goal of the hydat package is to smoothly and efficiently tidy hydrometric da
 
 ### Installation
 
-You can install this package directly from my github account using `devtools::install_github("dtavern/hydat")`
+You can install this package directly from my github account using 
+
+```
+devtools::install_github("dtavern/hydat")
+```
 
 ### Collaboration and Comments
 
@@ -32,7 +36,7 @@ This package is specifically developed for daily discharge .csv files downloaded
 
 ### Dependencies
 
-This package uses dplyr and ggplot from the tidyverse package. You can ensure all dependencies are met by installing the tidyverse from CRAN
+This package uses `dplyr`, `tidyr`, `ggplot2`, and `magrittr`. For quick access to these packages, you may install `tidyverse` to cover all your bases.
 
 ```
 install.packages("tidyverse")

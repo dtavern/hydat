@@ -8,7 +8,7 @@
 
 ###STATUS
 
-This package is currently unreleased and the first version (v0.1.0) is still being developed. At this point, it is just a seed of an idea and I am currently developing this package for an assignment in STAT545. Stay tuned for an official release. If you are looking for any specific functions or scripts, I am open to providing them to you.
+This R package is currently unreleased and the first version (v0.1.0) is still being developed. At this point, it is just a seed of an idea and I am currently developing this package for an assignment in STAT545. Stay tuned for an official release. If you are looking for any specific functions or scripts, I am open to providing them to you.
 
 ### Disclaimer
 

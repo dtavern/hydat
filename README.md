@@ -47,6 +47,8 @@ library(tidyverse)
 
 **Current Functions:**
 
+The current functions are being developed and a number of edits still need to be made. Renaming will occur to make things easier.
+
 `hydat_load`: Takes in raw .csv file from hydat database, matches measurement codes and station codes to their actual meaning, and converts the table from wide format to long format for easy analysis.
 
 `hydat_flooddist`: Takes in processed dataframe through `hydat_load` and generates a percentile value for annual peak flows.
